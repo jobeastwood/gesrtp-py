@@ -1,0 +1,121 @@
+2025-10-15 23:33:38,610 - src.connection - INFO - Initialized SRTP connection for 172.16.12.127:18245
+2025-10-15 23:33:38,610 - src.driver - INFO - Initialized GE-SRTP driver for 172.16.12.127:18245 (CPU slot 2)
+2025-10-15 23:33:38,610 - src.connection - INFO - Connecting to PLC at 172.16.12.127:18245...
+2025-10-15 23:33:38,612 - src.connection - INFO - TCP connection established
+2025-10-15 23:33:38,612 - src.connection - INFO - Starting initialization handshake...
+2025-10-15 23:33:38,612 - src.connection - DEBUG - Sending initialization packet 1...
+2025-10-15 23:33:38,615 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,615 - src.connection - DEBUG - Response header: 01000000000000000f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-10-15 23:33:38,615 - src.connection - DEBUG - Init packet 1 response received: 0100000000000000
+2025-10-15 23:33:38,615 - src.connection - INFO - Initialization handshake complete
+2025-10-15 23:33:38,615 - src.driver - INFO - Driver connected and ready
+2025-10-15 23:33:38,615 - src.driver - INFO - Reading register %R0, count=1
+2025-10-15 23:33:38,615 - src.packet - DEBUG - Built request packet: seq=0, service=0x04, selector=0x08, offset=0, length=4
+2025-10-15 23:33:38,615 - src.connection - DEBUG - Sending 56 bytes to PLC
+2025-10-15 23:33:38,616 - src.connection - DEBUG - Sent packet: 02000000000000000001000000000000000100000000000000002621170000c000000000200e000001010408000004000000000000000000
+2025-10-15 23:33:38,625 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Response header: 0300000008000000000000000000000000010000000000000000000000000094200e0000208001a000000800001800000101ff0200007c21
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Expecting 8 bytes of payload
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Received payload: 8 bytes
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Total data: 64 bytes
+2025-10-15 23:33:38,626 - src.packet - DEBUG - Parsed response: seq=0, msg_type=0x94, payload_len=8
+2025-10-15 23:33:38,626 - src.packet - DEBUG - Extracted 4 word values: (27546, 18174, 0, 16160)
+2025-10-15 23:33:38,626 - src.driver - DEBUG - Read registers %R0-0: [27546]
+2025-10-15 23:33:38,626 - src.driver - INFO - Reading discrete input %I0, count=4, mode=byte
+2025-10-15 23:33:38,626 - src.packet - DEBUG - Built request packet: seq=1, service=0x04, selector=0x10, offset=0, length=4
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Sending 56 bytes to PLC
+2025-10-15 23:33:38,626 - src.connection - DEBUG - Sent packet: 02000100000000000001000000000000000100000000000000002621170001c000000000200e000001010410000004000000000000000000
+2025-10-15 23:33:38,636 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,636 - src.connection - DEBUG - Response header: 03000100000000000000000000000000000100000000000000000000000001d4200e0000208001a001010000e2006ef90000ff0200007c21
+2025-10-15 23:33:38,636 - src.packet - DEBUG - Parsed response: seq=1, msg_type=0xD4, payload_len=0
+2025-10-15 23:33:38,636 - src.packet - DEBUG - Extracted 0 byte values
+2025-10-15 23:33:38,636 - src.driver - INFO - Reading discrete input %I0, count=32, mode=bit
+2025-10-15 23:33:38,636 - src.packet - DEBUG - Built request packet: seq=2, service=0x04, selector=0x46, offset=0, length=32
+2025-10-15 23:33:38,636 - src.connection - DEBUG - Sending 56 bytes to PLC
+2025-10-15 23:33:38,637 - src.connection - DEBUG - Sent packet: 02000200000000000001000000000000000100000000000000002621170002c000000000200e000001010446000020000000000000000000
+2025-10-15 23:33:38,646 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,646 - src.connection - DEBUG - Response header: 03000200000000000000000000000000000100000000000000000000000002d4200e0000208001a001010000e2006ef90000ff0200007c21
+2025-10-15 23:33:38,647 - src.packet - DEBUG - Parsed response: seq=2, msg_type=0xD4, payload_len=0
+2025-10-15 23:33:38,647 - src.packet - DEBUG - Extracted 0 bit values
+2025-10-15 23:33:38,647 - src.driver - INFO - Reading discrete output %Q0, count=4, mode=byte
+2025-10-15 23:33:38,647 - src.packet - DEBUG - Built request packet: seq=3, service=0x04, selector=0x12, offset=0, length=4
+2025-10-15 23:33:38,647 - src.connection - DEBUG - Sending 56 bytes to PLC
+2025-10-15 23:33:38,647 - src.connection - DEBUG - Sent packet: 02000300000000000001000000000000000100000000000000002621170003c000000000200e000001010412000004000000000000000000
+2025-10-15 23:33:38,656 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,657 - src.connection - DEBUG - Response header: 03000300000000000000000000000000000100000000000000000000000003d4200e0000208001a001010000040000000000ff0200007c21
+2025-10-15 23:33:38,657 - src.packet - DEBUG - Parsed response: seq=3, msg_type=0xD4, payload_len=0
+2025-10-15 23:33:38,657 - src.packet - DEBUG - Extracted 0 byte values
+2025-10-15 23:33:38,657 - src.driver - INFO - Reading discrete internal %M0, count=4, mode=byte
+2025-10-15 23:33:38,657 - src.packet - DEBUG - Built request packet: seq=4, service=0x04, selector=0x16, offset=0, length=4
+2025-10-15 23:33:38,657 - src.connection - DEBUG - Sending 56 bytes to PLC
+2025-10-15 23:33:38,657 - src.connection - DEBUG - Sent packet: 02000400000000000001000000000000000100000000000000002621170004c000000000200e000001010416000004000000000000000000
+2025-10-15 23:33:38,667 - src.connection - DEBUG - Received header: 56 bytes
+2025-10-15 23:33:38,667 - src.connection - DEBUG - Response header: 03000400000000000000000000000000000100000000000000000000000004d4200e0000208001a001010000000000000000ff0200007c21
+2025-10-15 23:33:38,667 - src.packet - DEBUG - Parsed response: seq=4, msg_type=0xD4, payload_len=0
+2025-10-15 23:33:38,667 - src.packet - DEBUG - Extracted 0 byte values
+2025-10-15 23:33:38,667 - src.connection - INFO - Disconnected from 172.16.12.127:18245
+2025-10-15 23:33:38,667 - src.driver - INFO - Driver disconnected
+================================================================================
+DETAILED DISCRETE I/O PACKET ANALYSIS
+================================================================================
+PLC: 172.16.12.127
+CPU Slot: 2
+
+✓ Connected to PLC
+
+
+================================================================================
+TEST 1: Register Read (Baseline - Known Working)
+================================================================================
+Reading %R1 (address 0)...
+✓ SUCCESS: %R1 = 27546
+
+================================================================================
+TEST 2: Discrete Input - Byte Mode
+================================================================================
+Request: Read 4 bytes from %I (address 0)
+Segment Selector: 0x10 (DISCRETE_INPUTS_BYTE)
+Data Length: 4 bytes (minimum requirement)
+✓ Result: []
+⚠ WARNING: Empty result (PLC sent no data)
+
+================================================================================
+TEST 3: Discrete Input - Bit Mode
+================================================================================
+Request: Read 32 bits from %I (address 0)
+Segment Selector: 0x46 (DISCRETE_INPUTS_BIT)
+Data Length: 32 bits (minimum requirement)
+✓ Result: []
+⚠ WARNING: Empty result (PLC sent no data)
+
+================================================================================
+TEST 4: Discrete Output - Byte Mode
+================================================================================
+Request: Read 4 bytes from %Q (address 0)
+Segment Selector: 0x12 (DISCRETE_OUTPUTS_BYTE)
+✓ Result: []
+⚠ WARNING: Empty result (PLC sent no data)
+
+================================================================================
+TEST 5: Internal Memory (%M) - Byte Mode
+================================================================================
+Request: Read 4 bytes from %M (address 0)
+Segment Selector: 0x16 (DISCRETE_INTERNALS_BYTE)
+✓ Result: []
+⚠ WARNING: Empty result (PLC sent no data)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Key Observations:
+1. Check debug logs above for packet dumps
+2. Look for 'Byte 4 (Payload Length)' in responses
+3. If Byte 4 = 0, PLC has no data (hardware not configured)
+4. If Byte 31 = 0xD1, segment selector might be wrong
+
+Next Steps:
+1. Use Wireshark to capture packets for deeper analysis
+2. Check PAC Machine Edition for actual I/O configuration
+3. Verify which I/O modules are physically installed
+================================================================================
