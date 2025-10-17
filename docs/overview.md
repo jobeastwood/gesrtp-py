@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-A complete, production-ready Python driver for communicating with GE Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). Successfully tested and verified on real GE RX3i hardware with ALL memory types working.
+A complete, production-ready Python driver for communicating with Emerson (formerly GE) Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). Successfully tested and verified on real Emerson RX3i hardware with ALL memory types working.
 
 ### Key Statistics
 - **2,500+ lines** of production Python code
@@ -23,7 +23,7 @@ A complete, production-ready Python driver for communicating with GE Programmabl
 ## Hardware Configuration (Verified)
 
 ### Current Test PLC
-- **Manufacturer**: GE (General Electric)
+- **Manufacturer**: Emerson (formerly GE - General Electric)
 - **Series**: PACSystems RX3i
 - **CPU Model**: EPXCPE210
 - **CPU Firmware**: 10.30 [EJTT]
@@ -253,9 +253,9 @@ Plus: `examples/README.md` for example script documentation
 - **Max Register Read**: 125 words per request
 
 ### Supported PLC Models
-- ✅ GE PACSystems EPXCPE210 (Firmware 10.30) - Current test platform
-- ✅ GE RX3i IC695CPE330 (Firmware 10.85) - Previously verified
-- Expected: GE Series 90-30, 90-70, VersaMax, other RX3i/PACSystems models
+- ✅ Emerson PACSystems EPXCPE210 (Firmware 10.30) - Current test platform
+- ✅ Emerson RX3i IC695CPE330 (Firmware 10.85) - Previously verified
+- Expected: Emerson/GE Series 90-30, 90-70, VersaMax, other RX3i/PACSystems models
 
 ### Connection Process
 1. TCP connection to port 18245
@@ -450,5 +450,5 @@ We built a **complete, production-ready GE-SRTP driver** that can read **ALL mem
 **Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
 **Result**: 🚀 **READY FOR USE!**
 **Last Updated**: 2025-10-17
-**Current Test Hardware**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
-**Previously Tested**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
+**Current Test Hardware**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previously Tested**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)

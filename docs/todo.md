@@ -8,7 +8,7 @@
 
 ## 🎉 PROJECT COMPLETE!
 
-The GE-SRTP driver is **100% complete** for all intended features. All core functionality has been implemented, tested, and verified on real GE RX3i hardware.
+The GE-SRTP driver is **100% complete** for all intended features. All core functionality has been implemented, tested, and verified on real Emerson RX3i hardware.
 
 ---
 
@@ -51,10 +51,10 @@ The GE-SRTP driver is **100% complete** for all intended features. All core func
 - [x] get_fault_table() - Fault information
 
 ### Phase 5: Example Scripts ✓
-- [x] examples/basic_usage.py - Tested and working
-- [x] examples/continuous_monitor.py - Real-time monitoring with change detection
-- [x] examples/memory_dump.py - Forensic memory acquisition to JSON
-- [x] examples/README.md - Complete usage documentation
+- [x] examples/01_basic_usage.py - Tested and working (Beginner ⭐)
+- [x] examples/02_realtime_monitor.py - Real-time monitoring with in-place updates (Intermediate ⭐⭐)
+- [x] examples/03_forensic_dump.py - Forensic memory acquisition to JSON (Advanced ⭐⭐⭐)
+- [x] examples/README.md - Complete usage documentation with difficulty ratings
 
 ### Phase 6: Documentation ✓
 - [x] README.md - Main user guide and API reference
@@ -67,7 +67,12 @@ The GE-SRTP driver is **100% complete** for all intended features. All core func
 - [x] Documentation organization (created docs/ directory)
 
 ### Phase 7: Project Organization ✓
-- [x] Move all test files to tests/ directory (7 files organized)
+- [x] Move all test files to tests/ directory
+- [x] Rename tests with numbered prefixes:
+  - [x] test_connection.py → 01_connection_basic.py
+  - [x] test_memory_types.py → 02_memory_all_types.py
+  - [x] Added 03_memory_comprehensive_0_64.py
+- [x] Create tests/README.md with comprehensive documentation
 - [x] Clean root directory structure
 - [x] Update all cross-references
 - [x] Professional project layout
@@ -192,11 +197,17 @@ These are **optional improvements** - the driver is fully functional without the
 5. ✅ RX3i-specific minimum lengths
 
 ### Hardware Verified
-- **PLC**: GE RX3i IC695CPE330
-- **Firmware**: 10.85
-- **Location**: Rack 0, Slot 2
-- **Network**: 172.16.12.127:18245
-- **I/O Modules**: Analog (IC694ALG223, IC694ALG392), Discrete (IC694MDL240, IC694MDL916)
+- **Current PLC**: Emerson PACSystems EPXCPE210
+  - **Firmware**: 10.30 [EJTT]
+  - **Location**: Rack 0, Slot 0
+  - **Network**: 172.16.12.124:18245
+  - **I/O Modules**: EP-12F4, EP-2714
+  - **Program Status**: NO PROGRAM LOADED (clean testing environment)
+- **Previous PLC**: Emerson RX3i IC695CPE330
+  - **Firmware**: 10.85
+  - **Location**: Rack 0, Slot 2
+  - **Network**: 172.16.12.127:18245
+  - **I/O Modules**: Analog (IC694ALG223, IC694ALG392), Discrete (IC694MDL240, IC694MDL916)
 
 ---
 
@@ -277,5 +288,6 @@ The GE-SRTP driver is **complete and production-ready** for reading all memory t
 
 **Project Status**: Production Ready
 **Completion**: 100%
-**Last Updated**: 2025-10-16
-**Hardware**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245
+**Last Updated**: 2025-10-17
+**Current Hardware**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previous Hardware**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)

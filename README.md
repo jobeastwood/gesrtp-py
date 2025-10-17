@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.7+-blue.svg)
 ![Status](https://img.shields.io/badge/status-production-brightgreen.svg)
 
-A Python driver for communicating with GE Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol).
+A Python driver for communicating with Emerson (formerly GE) Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol).
 
 ## Status: ✅ Production Ready
 
@@ -15,7 +15,7 @@ A Python driver for communicating with GE Programmable Logic Controllers using t
 
 #### ✅ Complete and Tested on Real Hardware
 
-All core modules have been implemented, tested, and verified on a live GE RX3i PLC:
+All core modules have been implemented, tested, and verified on a live Emerson RX3i PLC:
 
 - **`protocol.py`** - All service codes, segment selectors, and constants
 - **`exceptions.py`** - Complete exception hierarchy
@@ -33,7 +33,7 @@ All core modules have been implemented, tested, and verified on a live GE RX3i P
 - **Global Memory** (`%G`) - Read Genius global data ✓
 - **PLC Diagnostics** - Status, controller info, program names, date/time, fault table ✓
 
-**Total**: 9 memory types, 15 access modes - **ALL VERIFIED WORKING** on GE PACSystems hardware
+**Total**: 9 memory types, 15 access modes - **ALL VERIFIED WORKING** on Emerson PACSystems hardware
 
 #### ✅ Key Protocol Discoveries
 
@@ -49,9 +49,9 @@ See `docs/protocol.md` for complete technical details of all discoveries.
 
 #### ✅ Example Scripts Included
 
-- **`basic_usage.py`** - Demonstrates basic driver usage and common operations
-- **`continuous_monitor.py`** - Real-time PLC monitoring with change detection
-- **`memory_dump.py`** - Forensic memory acquisition to JSON
+- **`01_basic_usage.py`** - Demonstrates basic driver usage and common operations (Beginner ⭐)
+- **`02_realtime_monitor.py`** - Real-time PLC monitoring with live updates (Intermediate ⭐⭐)
+- **`03_forensic_dump.py`** - Forensic memory acquisition to JSON (Advanced ⭐⭐⭐)
 
 See `examples/README.md` for detailed documentation.
 
@@ -70,10 +70,10 @@ See `examples/README.md` for detailed documentation.
 - **Extensive logging**: Debug-level logging throughout for troubleshooting
 
 ### Supported PLC Models
-- GE Fanuc Series 90-30
-- GE Fanuc Series 90-70
-- GE RX3i / RX7i
-- Most GE PLCs with Ethernet and SRTP support
+- Emerson (formerly GE Fanuc) Series 90-30
+- Emerson (formerly GE Fanuc) Series 90-70
+- Emerson RX3i / RX7i PACSystems
+- Most Emerson/GE PLCs with Ethernet and SRTP support
 
 ### Memory Types Supported
 | Type | Description | Access Modes |
@@ -200,13 +200,15 @@ plc_project/
 ### Running Tests
 
 ```bash
-# Basic connection test
-python3 test_connection.py
+# Run tests
+python3 tests/01_connection_basic.py
+python3 tests/02_memory_all_types.py
+python3 tests/03_memory_comprehensive_0_64.py
 
-# Unit tests (TODO)
+# Unit tests with pytest (TODO - future enhancement)
 pytest tests/ -v
 
-# With coverage (TODO)
+# With coverage (TODO - future enhancement)
 pytest --cov=src tests/
 ```
 
@@ -219,7 +221,7 @@ pytest --cov=src tests/
 cd plc_project
 
 # No external dependencies required - uses Python standard library only!
-python3 examples/basic_usage.py
+python3 examples/01_basic_usage.py
 ```
 
 ### Your First Read
@@ -306,6 +308,6 @@ This software is provided for educational, research, and defensive security purp
 
 **Last Updated**: 2025-10-17
 **Status**: Production Ready - All Features Working ✅
-**Current Test PLC**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
-**Previously Tested**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
+**Current Test PLC**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previously Tested**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
 **Documentation**: See `docs/overview.md` for complete project details

@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- New test environment configuration for GE PACSystems EPXCPE210
+- New test environment configuration for Emerson PACSystems EPXCPE210
 - Comprehensive test script `03_memory_comprehensive_0_64.py` for testing addresses 0-64
 - Complete test suite documentation in `tests/README.md`
 - Professional numbered naming for tests (01_, 02_, 03_)
@@ -47,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial production-ready release
 - Complete GE-SRTP protocol driver implementation
 - Support for 9 memory types with 15 access modes
-- All memory types verified on GE RX3i IC695CPE330
+- All memory types verified on Emerson RX3i IC695CPE330
 - 5 major protocol discoveries documented
 - 3 example scripts (basic_usage, continuous_monitor, memory_dump)
 - Comprehensive documentation (8 markdown files)

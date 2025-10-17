@@ -1,6 +1,6 @@
 # PLC Hardware Configuration
 
-## Current Test Rig: GE PACSystems EPXCPE210
+## Current Test Rig: Emerson PACSystems EPXCPE210
 
 **Date Confirmed**: 2025-10-17
 **Status**: ✅ New test environment configuration
@@ -25,7 +25,7 @@
 ## CPU Details
 
 **Model**: EPXCPE210 (PACSystems)
-- **Series**: GE PACSystems RX3i
+- **Series**: Emerson PACSystems RX3i (formerly GE)
 - **Type**: Programmable Automation Controller (PAC)
 - **Firmware Version**: 10.30 [EJTT]
 - **Boot Firmware**: -
@@ -210,7 +210,7 @@ Visual representation of the rack:
 
 ## Comparison with Previous Test Hardware
 
-### Previous Hardware (IC695CPE330)
+### Previous Hardware (Emerson IC695CPE330)
 - **Model**: IC695CPE330
 - **IP**: 172.16.12.127
 - **Slot**: 2 (double-wide module, slots 2-3)
@@ -218,7 +218,7 @@ Visual representation of the rack:
 - **Program**: Production program loaded
 - **12-slot backplane with multiple I/O modules**
 
-### Current Hardware (EPXCPE210)
+### Current Hardware (Emerson EPXCPE210)
 - **Model**: EPXCPE210
 - **IP**: 172.16.12.124
 - **Slot**: 0 (single-wide, compact design)

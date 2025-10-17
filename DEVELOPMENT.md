@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-A **complete, production-ready** Python driver for GE Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). This driver enables direct network-based communication with GE RX3i PLCs for forensic memory acquisition and industrial automation purposes.
+A **complete, production-ready** Python driver for Emerson (formerly GE) Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). This driver enables direct network-based communication with Emerson RX3i PLCs for forensic memory acquisition and industrial automation purposes.
 
 ### Current Status
 
@@ -16,7 +16,7 @@ A **complete, production-ready** Python driver for GE Programmable Logic Control
 
 - **Code**: 2,500+ lines of production Python
 - **Memory Types**: 9 types with 15 access modes - **ALL WORKING**
-- **Hardware Tested**: GE PACSystems EPXCPE210 (Firmware 10.30) and IC695CPE330 (Firmware 10.85)
+- **Hardware Tested**: Emerson PACSystems EPXCPE210 (Firmware 10.30) and IC695CPE330 (Firmware 10.85)
 - **Documentation**: Comprehensive (10 markdown files including CHANGELOG.md)
 - **Test Scripts**: 3 organized tests with comprehensive documentation
 - **Example Scripts**: 3 professional examples with numbered naming + README
@@ -49,14 +49,14 @@ See `docs/todo.md` "Optional Future Enhancements" section for details.
 
 ### Protocol Background
 - **Protocol**: GE-SRTP (Service Request Transport Protocol)
-- **Developer**: General Electric (GE Intelligent Platforms)
+- **Developer**: Originally General Electric (GE Intelligent Platforms), now Emerson
 - **Purpose**: Data exchange between GE PLCs and computer-based clients
 - **Transport**: TCP/IP over Ethernet, port 18245
 - **Status**: Proprietary, no official public documentation
 - **Key Characteristic**: Little-endian byte ordering
 
 ### Target Hardware
-- **PLC Model**: GE PACSystems EPXCPE210
+- **PLC Model**: Emerson PACSystems EPXCPE210
 - **CPU Location**: Rack 0, Slot 0 (critical for mailbox addressing!)
 - **Firmware**: 10.30 [EJTT]
 - **IP Address**: 172.16.12.124
@@ -636,8 +636,8 @@ The project follows **Semantic Versioning** (semver.org):
 **Project Status**: ✅ Production Ready
 **Completion**: 100%
 **Last Updated**: 2025-10-17
-**Current Hardware**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
-**Previous Hardware**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
+**Current Hardware**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previous Hardware**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
 **Primary Use Case**: Forensic memory acquisition and PLC monitoring (read-only)
 
 ---
