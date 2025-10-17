@@ -1,7 +1,7 @@
 # gesrtp-py
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
 ![Python](https://img.shields.io/badge/python-3.7+-blue.svg)
 ![Status](https://img.shields.io/badge/status-production-brightgreen.svg)
 
@@ -9,7 +9,7 @@ A Python driver for communicating with Emerson (formerly GE) Programmable Logic 
 
 ## Status: ✅ Production Ready
 
-**Current Version:** 1.0.0
+**Current Version:** 1.1.0
 
 ### Implementation Status
 
@@ -110,7 +110,7 @@ The GE-SRTP protocol uses **0-based addressing**. To read %R1 from your PLC, use
 
 Formula: **Protocol Address = PLC Register Number - 1**
 
-See `ADDRESSING_SCHEME.md` for detailed explanation.
+See `docs/protocol.md` section 4 for detailed explanation of the addressing scheme.
 
 ### Basic Example
 
@@ -180,20 +180,36 @@ with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:
 
 ### Project Structure
 ```
-plc_project/
+gesrtp-py/
 ├── src/                    # Source code
 │   ├── protocol.py         # Protocol constants
 │   ├── exceptions.py       # Custom exceptions
 │   ├── packet.py           # Packet builder/parser
 │   ├── connection.py       # TCP connection management
-│   ├── driver.py           # Main driver class
-│   └── forensic.py         # (TODO) Forensic features
-├── tests/                  # Unit tests
+│   └── driver.py           # Main driver class
+├── tests/                  # Test scripts
+│   ├── 01_connection_basic.py
+│   ├── 02_memory_all_types.py
+│   ├── 03_memory_comprehensive_0_64.py
+│   └── README.md
 ├── examples/               # Example scripts
+│   ├── 01_basic_usage.py
+│   ├── 02_realtime_monitor.py
+│   ├── 03_forensic_dump.py
+│   └── README.md
 ├── docs/                   # Documentation
+│   ├── overview.md
+│   ├── protocol.md
+│   ├── hardware.md
+│   ├── wireshark.md
+│   ├── symbolic_addressing.md
+│   └── todo.md
 ├── reference/              # Reference materials
-├── logs/                   # Runtime logs
-├── requirements.txt        # Dependencies
+├── logs/                   # Runtime logs (auto-created)
+├── CHANGELOG.md            # Version history
+├── VERSION                 # Current version
+├── DEVELOPMENT.md          # Developer guide
+├── requirements.txt        # Dependencies (none!)
 └── README.md              # This file
 ```
 
@@ -218,7 +234,7 @@ pytest --cov=src tests/
 
 ```bash
 # Clone or download this repository
-cd plc_project
+cd gesrtp-py
 
 # No external dependencies required - uses Python standard library only!
 python3 examples/01_basic_usage.py
@@ -253,8 +269,9 @@ That's it! No dependencies, no configuration files, just pure Python.
 - **`docs/wireshark.md`** - Protocol analysis and debugging
 
 ### Development Resources
-- **`development.md`** - Developer guide and project insights
-- **`docs/todo.md`** - Task tracking
+- **`DEVELOPMENT.md`** - Developer guide and project insights
+- **`CHANGELOG.md`** - Version history and changes
+- **`docs/todo.md`** - Task tracking and future enhancements
 
 ## Security Warnings
 
