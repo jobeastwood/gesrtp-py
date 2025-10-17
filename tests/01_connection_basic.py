@@ -13,11 +13,16 @@ License: MIT
 Basic connection test script for GE-SRTP driver.
 
 This script tests the basic connection and register reading functionality
-with the PLC at 172.16.12.127.
+with the PLC at 172.16.12.124.
 """
 
 import logging
 import sys
+import os
+
+# Add parent directory to path so we can import src module
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 from src.driver import GE_SRTP_Driver
 
 # Configure logging
@@ -31,8 +36,8 @@ logger = logging.getLogger(__name__)
 
 def test_connection():
     """Test basic connection to PLC."""
-    plc_ip = "172.16.12.127"
-    cpu_slot = 2  # CPU is in slot 2
+    plc_ip = "172.16.12.124"
+    cpu_slot = 0  # CPU is in slot 0 (EPXCPE210)
 
     logger.info(f"Starting connection test to PLC at {plc_ip} (CPU slot {cpu_slot})")
 
@@ -78,8 +83,8 @@ def test_connection():
 
 def test_context_manager():
     """Test using driver as context manager."""
-    plc_ip = "172.16.12.127"
-    cpu_slot = 2  # CPU is in slot 2
+    plc_ip = "172.16.12.124"
+    cpu_slot = 0  # CPU is in slot 0 (EPXCPE210)
 
     logger.info(f"\nTesting context manager mode with PLC at {plc_ip} (CPU slot {cpu_slot})")
 

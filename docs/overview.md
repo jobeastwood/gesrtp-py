@@ -2,7 +2,7 @@
 
 **Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
 **Version**: 1.0.0
-**Last Updated**: 2025-10-16
+**Last Updated**: 2025-10-17
 
 ---
 
@@ -22,24 +22,30 @@ A complete, production-ready Python driver for communicating with GE Programmabl
 
 ## Hardware Configuration (Verified)
 
-### Target PLC
+### Current Test PLC
 - **Manufacturer**: GE (General Electric)
-- **Series**: RX3i (PACSystems)
+- **Series**: PACSystems RX3i
+- **CPU Model**: EPXCPE210
+- **CPU Firmware**: 10.30 [EJTT]
+- **Hardware Version**: 1.03
+- **Serial Number**: R867467
+- **CPU Location**: Rack 0, Slot 0
+- **Network Address**: 172.16.12.124:18245
+- **Program Status**: NO PROGRAM LOADED (clean slate for testing)
+
+### Installed I/O Modules
+- **Integrated Ethernet**: IC695EFM001 (part of CPU)
+- **I/O Module**: EP-12F4 in Slot 1
+- **I/O Module**: EP-2714 in Slot 2
+
+### Previously Tested PLC
 - **CPU Model**: IC695CPE330
 - **CPU Firmware**: 10.85
 - **CPU Location**: Rack 0, Slot 2
 - **Network Address**: 172.16.12.127:18245
-- **Backplane**: IC695CHS012 (12-slot universal backplane)
-- **Power Supply**: IC695PSD140 (24 VDC, 40 W) in Slot 0
+- **Configuration**: 12-slot backplane with multiple analog and discrete I/O modules
 
-### Installed I/O Modules
-- **Analog Input**: IC694ALG223 (16 Ch, 0-20 mA) in Slot 6
-- **Analog Output**: IC694ALG392 (8 Ch, 4-20 mA) in Slot 7
-- **Discrete Input**: IC694MDL240 (16 Ch, 120 VAC) in Slot 8
-- **Discrete Output**: IC694MDL916 (16 Ch, 24 VDC) in Slot 9
-- **Ethernet Modules**: IC695ETM001 in Slots 4 and 5
-
-**Full hardware details**: See `HARDWARE_CONFIG.md`
+**Full hardware details**: See `docs/hardware.md`
 
 ---
 
@@ -49,15 +55,15 @@ A complete, production-ready Python driver for communicating with GE Programmabl
 
 | Memory Type | Bit Mode | Byte Mode | Word Mode | Hardware | Test Status |
 |-------------|----------|-----------|-----------|----------|-------------|
-| %R (Registers) | - | - | ✅ | CPU | **VERIFIED** (%R1=27546, %R2=18174) |
-| %AI (Analog Input) | - | - | ✅ | IC694ALG223 | **VERIFIED** (%AI2=20, live sensor) |
-| %AQ (Analog Output) | - | - | ✅ | IC694ALG392 | **VERIFIED** (all zeros) |
-| %I (Discrete Input) | ✅ | ✅ | - | IC694MDL240 | **VERIFIED** (both modes) |
-| %Q (Discrete Output) | ✅ | ✅ | - | IC694MDL916 | **VERIFIED** (both modes) |
-| %M (Internal Memory) | ✅ | ✅ | - | CPU | **VERIFIED** (both modes) |
-| %T (Temporary Memory) | ✅ | ✅ | - | CPU | **VERIFIED** (both modes) |
-| %S (System Memory) | ✅ | ✅ | - | CPU | **VERIFIED** (%S, %SA, %SB, %SC) |
-| %G (Global Memory) | ✅ | ✅ | - | CPU | **VERIFIED** (both modes) |
+| %R (Registers) | - | - | ✅ | CPU | **VERIFIED** on multiple PLCs |
+| %AI (Analog Input) | - | - | ✅ | Analog I/O | **VERIFIED** on IC695CPE330 |
+| %AQ (Analog Output) | - | - | ✅ | Analog I/O | **VERIFIED** on IC695CPE330 |
+| %I (Discrete Input) | ✅ | ✅ | - | Discrete I/O | **VERIFIED** on IC695CPE330 |
+| %Q (Discrete Output) | ✅ | ✅ | - | Discrete I/O | **VERIFIED** on IC695CPE330 |
+| %M (Internal Memory) | ✅ | ✅ | - | CPU | **VERIFIED** on IC695CPE330 |
+| %T (Temporary Memory) | ✅ | ✅ | - | CPU | **VERIFIED** on IC695CPE330 |
+| %S (System Memory) | ✅ | ✅ | - | CPU | **VERIFIED** on IC695CPE330 |
+| %G (Global Memory) | ✅ | ✅ | - | CPU | **VERIFIED** on IC695CPE330 |
 
 **Total**: 15 different access modes across 9 memory types
 
@@ -129,27 +135,27 @@ A complete, production-ready Python driver for communicating with GE Programmabl
 **Problem**: Initialization failing with timeout
 **Solution**: DFRWS paper revealed init must be exactly 56 bytes of zeros
 **Impact**: Fixed connection handshake
-**Document**: See `PROTOCOL_DISCOVERIES.md` section 1
+**Document**: See `docs/protocol.md` section 1
 
 ### Discovery #2: Multi-Packet TCP Responses
 **Problem**: No data in responses
 **Solution**: PLC sends header (56 bytes) and payload separately in TWO TCP packets!
 **New Finding**: Message type 0x94 (ACK_WITH_DATA) not documented in DFRWS paper
 **Impact**: Critical for reading ANY data
-**Document**: See `PROTOCOL_DISCOVERIES.md` section 2
+**Document**: See `docs/protocol.md` section 2
 
 ### Discovery #3: CPU Slot Addressing
 **Problem**: PLC acknowledged but returned empty
 **Solution**: Mailbox must specify correct slot (slot 2 for this PLC)
 **Formula**: `first_byte = slot × 0x10`
 **Impact**: Required for all successful reads
-**Document**: See `PROTOCOL_DISCOVERIES.md` section 3
+**Document**: See `docs/protocol.md` section 3
 
 ### Discovery #4: 0-Based Protocol Addressing
 **Problem**: Confusion about register numbers
 **Solution**: Protocol uses 0-based, PLC UI uses 1-based
 **Mapping**: %R1 on PLC = address 0 in protocol
-**Document**: See `PROTOCOL_DISCOVERIES.md` section 4
+**Document**: See `docs/protocol.md` section 4
 
 ### Discovery #5: RX3i-Specific Minimum Lengths
 **Problem**: Discrete I/O returning empty despite hardware present
@@ -158,7 +164,7 @@ A complete, production-ready Python driver for communicating with GE Programmabl
 - Byte operations: **8 bytes** (higher than expected)
 - Bit operations: **64 bits** (higher than expected)
 **Impact**: Unlocked ALL discrete I/O functionality
-**Document**: See `PROTOCOL_DISCOVERIES.md` section 5
+**Document**: See `docs/protocol.md` section 5
 
 ---
 
@@ -224,13 +230,13 @@ with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
 | Document | Purpose |
 |----------|---------|
 | `README.md` | User guide and API reference |
-| `PROJECT_OVERVIEW.md` | This file - complete project overview |
-| `PROTOCOL_DISCOVERIES.md` | All 5 technical discoveries in one place |
-| `HARDWARE_CONFIG.md` | Complete RX3i hardware configuration |
-| `SYMBOLIC_ADDRESSING_INVESTIGATION.md` | How to add symbolic tag support |
-| `WIRESHARK_CAPTURE_GUIDE.md` | Protocol analysis and debugging |
+| `docs/overview.md` | This file - complete project overview |
+| `docs/protocol.md` | All 5 technical discoveries in one place |
+| `docs/hardware.md` | Complete RX3i hardware configuration |
+| `docs/symbolic_addressing.md` | How to add symbolic tag support |
+| `docs/wireshark.md` | Protocol analysis and debugging |
 | `DEVELOPMENT.md` | Developer guide and project insights |
-| `todo.md` | Task tracking |
+| `docs/todo.md` | Task tracking |
 
 Plus: `examples/README.md` for example script documentation
 
@@ -247,8 +253,9 @@ Plus: `examples/README.md` for example script documentation
 - **Max Register Read**: 125 words per request
 
 ### Supported PLC Models
-- ✅ GE RX3i IC695CPE330 (Firmware 10.85) - Verified
-- Expected: GE Series 90-30, 90-70, VersaMax, other RX3i models
+- ✅ GE PACSystems EPXCPE210 (Firmware 10.30) - Current test platform
+- ✅ GE RX3i IC695CPE330 (Firmware 10.85) - Previously verified
+- Expected: GE Series 90-30, 90-70, VersaMax, other RX3i/PACSystems models
 
 ### Connection Process
 1. TCP connection to port 18245
@@ -303,7 +310,8 @@ from src.driver import GE_SRTP_Driver
 
 # IMPORTANT: Specify correct CPU slot!
 # IMPORTANT: Use 0-based addressing (Protocol Address = PLC Register Number - 1)
-with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
+# Current test PLC: slot=0 at 172.16.12.124
+with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:
     # Read %R1 (address 0)
     r1 = plc.read_register(0)
     print(f"%R1 = {r1}")  # Output: %R1 = 27546
@@ -441,5 +449,6 @@ We built a **complete, production-ready GE-SRTP driver** that can read **ALL mem
 
 **Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
 **Result**: 🚀 **READY FOR USE!**
-**Last Updated**: 2025-10-16
-**Hardware Tested**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245
+**Last Updated**: 2025-10-17
+**Current Test Hardware**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previously Tested**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)

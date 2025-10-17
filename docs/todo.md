@@ -2,7 +2,7 @@
 
 **Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
 **Version**: 1.0.0
-**Last Updated**: 2025-10-16
+**Last Updated**: 2025-10-17
 
 ---
 
@@ -58,12 +58,13 @@ The GE-SRTP driver is **100% complete** for all intended features. All core func
 
 ### Phase 6: Documentation ✓
 - [x] README.md - Main user guide and API reference
-- [x] PROJECT_OVERVIEW.md - Complete project summary and development journey
-- [x] PROTOCOL_DISCOVERIES.md - All 5 technical discoveries documented
-- [x] HARDWARE_CONFIG.md - Complete RX3i hardware configuration
-- [x] SYMBOLIC_ADDRESSING_INVESTIGATION.md - Future enhancement guide
-- [x] WIRESHARK_CAPTURE_GUIDE.md - Protocol analysis and debugging guide
+- [x] docs/overview.md - Complete project summary and development journey
+- [x] docs/protocol.md - All 5 technical discoveries documented
+- [x] docs/hardware.md - Complete RX3i hardware configuration
+- [x] docs/symbolic_addressing.md - Future enhancement guide
+- [x] docs/wireshark.md - Protocol analysis and debugging guide
 - [x] Documentation consolidation (15 → 8 files)
+- [x] Documentation organization (created docs/ directory)
 
 ### Phase 7: Project Organization ✓
 - [x] Move all test files to tests/ directory (7 files organized)
@@ -93,6 +94,17 @@ These are **optional improvements** - the driver is fully functional without the
 - [ ] Set up pytest fixtures and test coverage reporting
 - [ ] Add CI/CD pipeline (GitHub Actions)
 
+### Protocol Research (Investigation Needed)
+- [ ] **Investigate minimum read length requirements in detail**
+  - [ ] Document exact behavior when reading near configured memory boundaries
+  - [ ] Test with various configured memory sizes (64, 128, 256, 512, 1024 registers)
+  - [ ] Determine if minimum read padding affects boundary conditions
+  - [ ] Example: Reading 61-65 registers with only 64 configured caused issues
+  - [ ] Workaround: Increase configured memory (e.g., to 1024) allows reading all 65
+  - [ ] Research: Does PLC require padding to minimum read lengths? (4 words, 8 bytes, 64 bits)
+  - [ ] Document findings in docs/protocol.md
+  - [ ] Update driver documentation with memory configuration recommendations
+
 ### Advanced Features (Enhancement)
 - [ ] Implement advanced forensic module (src/forensic.py)
   - [ ] Full memory dump with all memory types
@@ -103,7 +115,7 @@ These are **optional improvements** - the driver is fully functional without the
   - [ ] read_register_ui(1) → reads %R1 (subtracts 1 internally)
   - [ ] Configuration flag to choose addressing mode
 - [ ] Symbolic tag addressing support
-  - [ ] See SYMBOLIC_ADDRESSING_INVESTIGATION.md for research plan
+  - [ ] See docs/symbolic_addressing.md for research plan
   - [ ] Requires packet capture from Kepware
   - [ ] Reverse engineer symbolic read protocol
 
@@ -157,7 +169,20 @@ These are **optional improvements** - the driver is fully functional without the
 - ✅ All 9 memory types tested on real hardware
 - ✅ All 15 access modes verified working
 - ✅ Example scripts tested and validated
+- ✅ **NEW (2025-10-17)**: All tests passed on EPXCPE210 hardware
+  - ✅ 01_connection_basic.py - PASSED
+  - ✅ 02_memory_all_types.py - PASSED
+  - ✅ 03_memory_comprehensive_0_64.py - PASSED (addresses 0-64)
+  - ✅ All 3 example scripts tested with real PLC data
+  - ✅ Real-time monitor tested with live value changes
 - ✅ PLC diagnostics functions verified
+
+### Hardware Testing
+- ✅ **Previous Hardware**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
+- ✅ **Current Hardware**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+  - Clean PLC with no program loaded
+  - Perfect for comprehensive testing
+  - All tests passed successfully
 
 ### Protocol Discoveries
 1. ✅ All-zeros initialization sequence
@@ -202,9 +227,9 @@ These are **optional improvements** - the driver is fully functional without the
 
 For complete information, see:
 - **README.md** - Quick start and user guide
-- **PROJECT_OVERVIEW.md** - Complete project summary
-- **PROTOCOL_DISCOVERIES.md** - Technical discoveries
-- **HARDWARE_CONFIG.md** - PLC hardware details
+- **docs/overview.md** - Complete project summary
+- **docs/protocol.md** - Technical discoveries
+- **docs/hardware.md** - PLC hardware details
 - **examples/README.md** - Example script usage
 
 ---
