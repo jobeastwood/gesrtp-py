@@ -1,21 +1,21 @@
 # gesrtp-py
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
 ![Python](https://img.shields.io/badge/python-3.7+-blue.svg)
 ![Status](https://img.shields.io/badge/status-production-brightgreen.svg)
 
-A Python driver for communicating with GE Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol).
+A Python driver for communicating with Emerson (formerly GE) Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol).
 
 ## Status: ✅ Production Ready
 
-**Current Version:** 1.0.0
+**Current Version:** 1.1.0
 
 ### Implementation Status
 
 #### ✅ Complete and Tested on Real Hardware
 
-All core modules have been implemented, tested, and verified on a live GE RX3i PLC:
+All core modules have been implemented, tested, and verified on a live Emerson RX3i PLC:
 
 - **`protocol.py`** - All service codes, segment selectors, and constants
 - **`exceptions.py`** - Complete exception hierarchy
@@ -33,7 +33,7 @@ All core modules have been implemented, tested, and verified on a live GE RX3i P
 - **Global Memory** (`%G`) - Read Genius global data ✓
 - **PLC Diagnostics** - Status, controller info, program names, date/time, fault table ✓
 
-**Total**: 9 memory types, 15 access modes - **ALL VERIFIED WORKING** on GE RX3i IC695CPE330
+**Total**: 9 memory types, 15 access modes - **ALL VERIFIED WORKING** on Emerson PACSystems hardware
 
 #### ✅ Key Protocol Discoveries
 
@@ -45,19 +45,19 @@ Through systematic testing with real hardware, we discovered and documented:
 4. **0-Based Protocol Addressing** - Protocol uses 0-based, UI uses 1-based
 5. **RX3i Minimum Lengths** - Higher minimums than Series 90-30
 
-See `PROTOCOL_DISCOVERIES.md` for complete technical details of all discoveries.
+See `docs/protocol.md` for complete technical details of all discoveries.
 
 #### ✅ Example Scripts Included
 
-- **`basic_usage.py`** - Demonstrates basic driver usage and common operations
-- **`continuous_monitor.py`** - Real-time PLC monitoring with change detection
-- **`memory_dump.py`** - Forensic memory acquisition to JSON
+- **`01_basic_usage.py`** - Demonstrates basic driver usage and common operations (Beginner ⭐)
+- **`02_realtime_monitor.py`** - Real-time PLC monitoring with live updates (Intermediate ⭐⭐)
+- **`03_forensic_dump.py`** - Forensic memory acquisition to JSON (Advanced ⭐⭐⭐)
 
 See `examples/README.md` for detailed documentation.
 
 #### 🔬 Future Enhancements (Optional)
 
-- Symbolic tag addressing (investigation guide: `SYMBOLIC_ADDRESSING_INVESTIGATION.md`)
+- Symbolic tag addressing (investigation guide: `docs/symbolic_addressing.md`)
 - Advanced forensic module with snapshot comparison
 - Unit test suite with pytest
 - Write operations (not recommended for safety)
@@ -70,10 +70,10 @@ See `examples/README.md` for detailed documentation.
 - **Extensive logging**: Debug-level logging throughout for troubleshooting
 
 ### Supported PLC Models
-- GE Fanuc Series 90-30
-- GE Fanuc Series 90-70
-- GE RX3i / RX7i
-- Most GE PLCs with Ethernet and SRTP support
+- Emerson (formerly GE Fanuc) Series 90-30
+- Emerson (formerly GE Fanuc) Series 90-70
+- Emerson RX3i / RX7i PACSystems
+- Most Emerson/GE PLCs with Ethernet and SRTP support
 
 ### Memory Types Supported
 | Type | Description | Access Modes |
@@ -110,7 +110,7 @@ The GE-SRTP protocol uses **0-based addressing**. To read %R1 from your PLC, use
 
 Formula: **Protocol Address = PLC Register Number - 1**
 
-See `ADDRESSING_SCHEME.md` for detailed explanation.
+See `docs/protocol.md` section 4 for detailed explanation of the addressing scheme.
 
 ### Basic Example
 
@@ -118,7 +118,8 @@ See `ADDRESSING_SCHEME.md` for detailed explanation.
 from src.driver import GE_SRTP_Driver
 
 # Connect to PLC (specify slot if CPU is not in slot 1)
-plc = GE_SRTP_Driver('172.16.12.127', slot=2)
+# Current test PLC: slot=0 at 172.16.12.124
+plc = GE_SRTP_Driver('172.16.12.124', slot=0)
 plc.connect()
 
 # Read %R1 and %R2 (use addresses 0 and 1)
@@ -149,7 +150,7 @@ plc.disconnect()
 ### Context Manager
 
 ```python
-with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
+with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:
     value = plc.read_register(100)
     print(f"%R100 = {value}")
 # Automatically disconnects
@@ -179,33 +180,51 @@ with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
 
 ### Project Structure
 ```
-plc_project/
+gesrtp-py/
 ├── src/                    # Source code
 │   ├── protocol.py         # Protocol constants
 │   ├── exceptions.py       # Custom exceptions
 │   ├── packet.py           # Packet builder/parser
 │   ├── connection.py       # TCP connection management
-│   ├── driver.py           # Main driver class
-│   └── forensic.py         # (TODO) Forensic features
-├── tests/                  # Unit tests
+│   └── driver.py           # Main driver class
+├── tests/                  # Test scripts
+│   ├── 01_connection_basic.py
+│   ├── 02_memory_all_types.py
+│   ├── 03_memory_comprehensive_0_64.py
+│   └── README.md
 ├── examples/               # Example scripts
+│   ├── 01_basic_usage.py
+│   ├── 02_realtime_monitor.py
+│   ├── 03_forensic_dump.py
+│   └── README.md
 ├── docs/                   # Documentation
+│   ├── overview.md
+│   ├── protocol.md
+│   ├── hardware.md
+│   ├── wireshark.md
+│   ├── symbolic_addressing.md
+│   └── todo.md
 ├── reference/              # Reference materials
-├── logs/                   # Runtime logs
-├── requirements.txt        # Dependencies
+├── logs/                   # Runtime logs (auto-created)
+├── CHANGELOG.md            # Version history
+├── VERSION                 # Current version
+├── DEVELOPMENT.md          # Developer guide
+├── requirements.txt        # Dependencies (none!)
 └── README.md              # This file
 ```
 
 ### Running Tests
 
 ```bash
-# Basic connection test
-python3 test_connection.py
+# Run tests
+python3 tests/01_connection_basic.py
+python3 tests/02_memory_all_types.py
+python3 tests/03_memory_comprehensive_0_64.py
 
-# Unit tests (TODO)
+# Unit tests with pytest (TODO - future enhancement)
 pytest tests/ -v
 
-# With coverage (TODO)
+# With coverage (TODO - future enhancement)
 pytest --cov=src tests/
 ```
 
@@ -215,10 +234,10 @@ pytest --cov=src tests/
 
 ```bash
 # Clone or download this repository
-cd plc_project
+cd gesrtp-py
 
 # No external dependencies required - uses Python standard library only!
-python3 examples/basic_usage.py
+python3 examples/01_basic_usage.py
 ```
 
 ### Your First Read
@@ -227,7 +246,7 @@ python3 examples/basic_usage.py
 from src.driver import GE_SRTP_Driver
 
 # Connect to PLC (specify slot if CPU not in slot 1)
-with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
+with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:
     # Read %R1 (remember: 0-based addressing!)
     value = plc.read_register(0)
     print(f"%R1 = {value}")
@@ -239,19 +258,20 @@ That's it! No dependencies, no configuration files, just pure Python.
 
 ### Core Documentation
 - **`README.md`** (this file) - Overview and quick start
-- **`PROJECT_OVERVIEW.md`** - Complete project summary, status, and development journey
-- **`PROTOCOL_DISCOVERIES.md`** - All 5 major protocol discoveries with technical details
+- **`docs/overview.md`** - Complete project summary, status, and development journey
+- **`docs/protocol.md`** - All 5 major protocol discoveries with technical details
 
 ### Hardware & Configuration
-- **`HARDWARE_CONFIG.md`** - Complete RX3i hardware configuration
+- **`docs/hardware.md`** - Complete RX3i hardware configuration
 
 ### Future Enhancements
-- **`SYMBOLIC_ADDRESSING_INVESTIGATION.md`** - How to add symbolic tag support
-- **`WIRESHARK_CAPTURE_GUIDE.md`** - Protocol analysis and debugging
+- **`docs/symbolic_addressing.md`** - How to add symbolic tag support
+- **`docs/wireshark.md`** - Protocol analysis and debugging
 
 ### Development Resources
 - **`DEVELOPMENT.md`** - Developer guide and project insights
-- **`todo.md`** - Task tracking
+- **`CHANGELOG.md`** - Version history and changes
+- **`docs/todo.md`** - Task tracking and future enhancements
 
 ## Security Warnings
 
@@ -303,8 +323,8 @@ This software is provided for educational, research, and defensive security purp
 
 ---
 
-**Last Updated**: 2025-10-16
+**Last Updated**: 2025-10-17
 **Status**: Production Ready - All Features Working ✅
-**Development Platform**: Raspberry Pi 5 with Python 3.x
-**Target PLC**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245
-**Documentation**: See `PROJECT_OVERVIEW.md` for complete project details
+**Current Test PLC**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previously Tested**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
+**Documentation**: See `docs/overview.md` for complete project details

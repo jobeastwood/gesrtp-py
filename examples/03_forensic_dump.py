@@ -241,8 +241,8 @@ def perform_memory_dump(plc_ip: str, cpu_slot: int, output_file: str = None):
 
 
 def main():
-    PLC_IP = "172.16.12.127"
-    CPU_SLOT = 2
+    PLC_IP = "172.16.12.124"
+    CPU_SLOT = 0  # EPXCPE210 in slot 0
 
     # Optional: customize output file
     OUTPUT_FILE = None  # None = auto-generate filename

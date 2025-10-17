@@ -1,24 +1,35 @@
 # gesrtp-py - Developer Guide
 
-**Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
-**Version**: 1.0.0
-**Last Updated**: 2025-10-16
+**Project Status**: ✅ **PRODUCTION READY** | 🔬 **ACTIVE RESEARCH**
+**Version**: 1.1.0
+**Last Updated**: 2025-10-17
+**Research Phase**: Investigating symbolic addressing, additional data types, and write operations
 
 ---
 
 ## Project Overview
 
-A **complete, production-ready** Python driver for GE Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). This driver enables direct network-based communication with GE RX3i PLCs for forensic memory acquisition and industrial automation purposes.
+A **complete, production-ready** Python driver for Emerson (formerly GE) Programmable Logic Controllers using the proprietary GE-SRTP (Service Request Transport Protocol). This driver enables direct network-based communication with Emerson RX3i PLCs for forensic memory acquisition and industrial automation purposes.
 
 ### Current Status
 
-🎉 **PROJECT COMPLETE!** All intended features have been implemented, tested, and verified on real hardware.
+🎉 **PRODUCTION READY** for traditional addressing! All core features implemented and verified on real hardware.
 
+🔬 **ACTIVE RESEARCH** for advanced features using trial-and-error approach with limited protocol documentation.
+
+**Production Features** (v1.1.0):
 - **Code**: 2,500+ lines of production Python
 - **Memory Types**: 9 types with 15 access modes - **ALL WORKING**
-- **Hardware Tested**: GE RX3i IC695CPE330 (Firmware 10.85)
-- **Documentation**: Comprehensive (8 markdown files)
-- **Example Scripts**: 3 working examples + README
+- **Hardware Tested**: Emerson PACSystems EPXCPE210 (Firmware 10.30) and IC695CPE330 (Firmware 10.85)
+- **Documentation**: Comprehensive (10 markdown files including CHANGELOG.md)
+- **Test Scripts**: 3 organized tests with comprehensive documentation
+- **Example Scripts**: 3 professional examples with numbered naming + README
+- **Version Control**: Semantic versioning with detailed changelog
+
+**Research Goals** (Future versions):
+- 🔬 **Symbolic tag addressing** - Using KEPServerEX packet analysis to reverse-engineer protocol
+- 🔬 **Additional data types** - INT, DINT, UINT, BYTE, WORD, DWORD, REAL, LREAL, STRING, ENUM
+- 🔬 **Write operations** - Protocol research with extensive safety considerations ⚠️
 
 ---
 
@@ -26,9 +37,9 @@ A **complete, production-ready** Python driver for GE Programmable Logic Control
 
 ### For New Contributors
 
-1. **Read PROJECT_OVERVIEW.md** - Complete project summary and achievements
-2. **Read PROTOCOL_DISCOVERIES.md** - 5 critical protocol findings
-3. **Read TODO.md** - See what's complete and what's optional for future
+1. **Read docs/overview.md** - Complete project summary and achievements
+2. **Read docs/protocol.md** - 5 critical protocol findings
+3. **Read docs/todo.md** - See what's complete and what's optional for future
 4. **Study examples/** - Working code demonstrating all features
 
 ### For Maintenance/Enhancement
@@ -39,7 +50,7 @@ The driver is **feature-complete**. Future work is **optional enhancement** only
 - Symbolic tag addressing support
 - Code quality improvements
 
-See TODO.md "Optional Future Enhancements" section for details.
+See `docs/todo.md` "Optional Future Enhancements" section for details.
 
 ---
 
@@ -47,22 +58,22 @@ See TODO.md "Optional Future Enhancements" section for details.
 
 ### Protocol Background
 - **Protocol**: GE-SRTP (Service Request Transport Protocol)
-- **Developer**: General Electric (GE Intelligent Platforms)
+- **Developer**: Originally General Electric (GE Intelligent Platforms), now Emerson
 - **Purpose**: Data exchange between GE PLCs and computer-based clients
 - **Transport**: TCP/IP over Ethernet, port 18245
 - **Status**: Proprietary, no official public documentation
 - **Key Characteristic**: Little-endian byte ordering
 
 ### Target Hardware
-- **PLC Model**: GE RX3i IC695CPE330
-- **CPU Location**: Rack 0, Slot 2 (critical for mailbox addressing!)
-- **Firmware**: 10.85
-- **IP Address**: 172.16.12.127
+- **PLC Model**: Emerson PACSystems EPXCPE210
+- **CPU Location**: Rack 0, Slot 0 (critical for mailbox addressing!)
+- **Firmware**: 10.30 [EJTT]
+- **IP Address**: 172.16.12.124
 - **Port**: 18245 (default GE-SRTP port)
-- **Development Platform**: Raspberry Pi 5 with Python 3.x
-- **Network**: Verified connectivity
+- **Program Status**: NO PROGRAM LOADED (clean slate for testing)
+- **Network**: Isolated industrial network
 
-**Full hardware details**: See `HARDWARE_CONFIG.md`
+**Full hardware details**: See `docs/hardware.md`
 
 ### Security Warning
 ⚠️ **CRITICAL**: This protocol has minimal security by default. PLCs in default configuration have NO AUTHENTICATION. Write operations (NOT implemented in this driver) can cause physical damage to equipment or endanger workers.
@@ -74,37 +85,40 @@ See TODO.md "Optional Future Enhancements" section for details.
 ## Project Structure
 
 ```
-plc_project/
+gesrtp-py/
 ├── README.md                          # Main user guide
-├── PROJECT_OVERVIEW.md                # Complete project summary
-├── PROTOCOL_DISCOVERIES.md            # 5 major technical discoveries
-├── HARDWARE_CONFIG.md                 # RX3i hardware configuration
-├── TODO.md                            # Project status and completion tracking
 ├── DEVELOPMENT.md                     # This file - developer guide
+├── CHANGELOG.md                       # Version history and changes (NEW v1.1.0)
+├── VERSION                            # Current version number (NEW v1.1.0)
 ├── requirements.txt                   # Python dependencies (none - pure Python!)
 │
+├── docs/                              # Documentation directory (NEW v1.1.0)
+│   ├── overview.md                    # Complete project summary
+│   ├── protocol.md                    # 5 major technical discoveries
+│   ├── hardware.md                    # Hardware configuration details
+│   ├── wireshark.md                   # Wireshark capture guide
+│   ├── symbolic_addressing.md         # Symbolic addressing investigation
+│   └── todo.md                        # Project status and task tracking
+│
 ├── src/                               # Source code (1,720 lines)
-│   ├── __init__.py
+│   ├── __init__.py                    # Package initialization (version 1.1.0)
 │   ├── protocol.py                    # Protocol constants (service codes, selectors)
 │   ├── exceptions.py                  # Custom exception hierarchy
 │   ├── packet.py                      # 56-byte packet builder/parser
 │   ├── connection.py                  # TCP socket with multi-packet handling
 │   └── driver.py                      # Main driver with all read operations
 │
-├── tests/                             # Test files (7 files)
-│   ├── test_connection.py             # Basic connectivity tests
-│   ├── test_memory_types.py           # Comprehensive memory tests
-│   ├── test_discrete_debug.py         # Discrete I/O debugging
-│   ├── test_discrete_detailed.py      # Detailed discrete tests
-│   ├── test_discrete_correct_addressing.py
-│   ├── test_discrete_bit_mode.py      # Bit mode testing
-│   └── discrete_test_output.txt       # Test output log
+├── tests/                             # Professional test suite (v1.1.0)
+│   ├── README.md                      # Complete test documentation (NEW)
+│   ├── 01_connection_basic.py         # Basic connectivity test (renamed)
+│   ├── 02_memory_all_types.py         # All memory types test (renamed)
+│   └── 03_memory_comprehensive_0_64.py # Comprehensive 0-64 test (NEW)
 │
-├── examples/                          # Example scripts
-│   ├── README.md                      # Example documentation
-│   ├── basic_usage.py                 # Introduction to driver usage
-│   ├── continuous_monitor.py          # Real-time monitoring
-│   └── memory_dump.py                 # Forensic acquisition
+├── examples/                          # Professional examples (v1.1.0)
+│   ├── README.md                      # Improved example documentation
+│   ├── 01_basic_usage.py              # Beginner: Simple reads (renamed)
+│   ├── 02_realtime_monitor.py         # Intermediate: Live monitoring (rewritten!)
+│   └── 03_forensic_dump.py            # Advanced: Memory dump (renamed)
 │
 ├── reference/                         # Reference materials
 │   ├── Leveraging_the_SRTP_protocol_for_over-the-network_.pdf
@@ -112,6 +126,19 @@ plc_project/
 │
 └── logs/                              # Runtime logs (created automatically)
 ```
+
+### What's New in v1.1.0
+
+**Major Improvements:**
+- 🔥 **Completely rewritten real-time monitor** with in-place updates (no scrolling!)
+- ✅ **New comprehensive test** for addresses 0-64 across all memory types
+- 📚 **Professional test documentation** (tests/README.md)
+- 📝 **CHANGELOG.md** following industry standard
+- 🔢 **Numbered file organization** for tests and examples (01_, 02_, 03_)
+- ⭐ **Difficulty ratings** for examples (beginner to advanced)
+- 🎯 **Improved organization** and user experience
+
+**All tests passed on new EPXCPE210 hardware!**
 
 ---
 
@@ -176,7 +203,7 @@ During development, we made **5 critical discoveries** not documented in academi
 ### Discovery #3: CPU Slot-Specific Addressing ✅
 **Finding**: Mailbox destination (bytes 36-39) must specify correct CPU slot
 **Formula**: First byte = `slot × 0x10`
-**This PLC**: Slot 2 → `0x20 0x0E 0x00 0x00`
+**Current Test PLC**: Slot 0 → `0x00 0x0E 0x00 0x00` (previously tested with slot 2 → `0x20 0x0E 0x00 0x00`)
 **Implementation**: `protocol.py` - `get_mailbox_destination(slot)` function
 
 ### Discovery #4: 0-Based Protocol Addressing ✅
@@ -194,7 +221,7 @@ During development, we made **5 critical discoveries** not documented in academi
 **Impact**: This discovery unlocked ALL discrete I/O functionality!
 **Implementation**: All read methods in `driver.py`
 
-**Complete technical details**: See `PROTOCOL_DISCOVERIES.md`
+**Complete technical details**: See `docs/protocol.md`
 
 ---
 
@@ -291,10 +318,10 @@ Bytes 48-55: Reserved (0x00)
 ```python
 from src.driver import GE_SRTP_Driver
 
-# IMPORTANT: Specify correct CPU slot! (slot 2 for this PLC)
+# IMPORTANT: Specify correct CPU slot! (slot 0 for current test PLC)
 # IMPORTANT: Use 0-based addressing! (Protocol Address = PLC Register Number - 1)
 
-with GE_SRTP_Driver('172.16.12.127', slot=2) as plc:
+with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:
     # Read %R1 (address 0)
     r1 = plc.read_register(0)
     print(f"%R1 = {r1}")
@@ -356,11 +383,11 @@ The codebase is complete and stable. When maintaining:
 1. **Preserve Safety**: Do NOT add write operations without extensive discussion
 2. **Test Thoroughly**: All changes should be tested on real hardware
 3. **Document Discoveries**: If you find new protocol behavior, document it
-4. **Update TODO.md**: Mark enhancements as completed when implemented
+4. **Update docs/todo.md**: Mark enhancements as completed when implemented
 
 ### For Enhancements
 
-See TODO.md "Optional Future Enhancements" section for ideas:
+See `docs/todo.md` "Optional Future Enhancements" section for ideas:
 
 **High Priority**:
 - Unit test suite (pytest)
@@ -370,7 +397,7 @@ See TODO.md "Optional Future Enhancements" section for ideas:
 **Medium Priority**:
 - Advanced forensic module
 - 1-based addressing helpers
-- Symbolic tag support (see `SYMBOLIC_ADDRESSING_INVESTIGATION.md`)
+- Symbolic tag support (see `docs/symbolic_addressing.md`)
 
 **Low Priority**:
 - Web dashboard
@@ -464,7 +491,7 @@ def get_mailbox_destination(slot: int = 1) -> bytes:
     return bytes([slot * 0x10, 0x0E, 0x00, 0x00])
 ```
 
-**This PLC**: Slot 2 → `0x20 0x0E 0x00 0x00`
+**Current Test PLC**: Slot 0 → `0x00 0x0E 0x00 0x00` (previously tested with slot 2 → `0x20 0x0E 0x00 0x00`)
 
 ### 0-Based Addressing
 
@@ -527,11 +554,11 @@ This driver is **intentionally read-only** for safety:
 
 ### Project Documentation
 - `README.md` - User guide
-- `PROJECT_OVERVIEW.md` - Complete project summary
-- `PROTOCOL_DISCOVERIES.md` - 5 major technical discoveries
-- `HARDWARE_CONFIG.md` - RX3i hardware details
-- `SYMBOLIC_ADDRESSING_INVESTIGATION.md` - Future enhancement guide
-- `WIRESHARK_CAPTURE_GUIDE.md` - Protocol debugging
+- `docs/overview.md` - Complete project summary
+- `docs/protocol.md` - 5 major technical discoveries
+- `docs/hardware.md` - RX3i hardware details
+- `docs/symbolic_addressing.md` - Future enhancement guide
+- `docs/wireshark.md` - Protocol debugging
 
 ---
 
@@ -565,6 +592,43 @@ For future protocol reverse engineering projects:
 
 ---
 
+## Versioning Strategy
+
+The project follows **Semantic Versioning** (semver.org):
+
+**Version Format**: `MAJOR.MINOR.PATCH` (e.g., 1.1.0)
+
+- **MAJOR** version: Incompatible API changes (breaking changes)
+- **MINOR** version: New functionality in backwards compatible manner
+- **PATCH** version: Backwards compatible bug fixes
+
+**Version Tracking Files**:
+1. `VERSION` - Single-line version number (1.1.0)
+2. `CHANGELOG.md` - Industry standard changelog following "Keep a Changelog" format
+3. `src/__init__.py` - `__version__ = "1.1.0"` attribute
+
+**When to Increment**:
+- **MAJOR (1.0.0 → 2.0.0)**: Change API signatures, remove features, change addressing scheme
+- **MINOR (1.0.0 → 1.1.0)**: Add new features, add new memory types, improve examples
+- **PATCH (1.0.0 → 1.0.1)**: Fix bugs, update documentation, performance improvements
+
+**Version History**:
+- **v1.0.0** (2025-10-16) - Initial production release on IC695CPE330
+- **v1.1.0** (2025-10-17) - New test rig, improved examples/tests, comprehensive testing
+
+**Changelog Management**:
+- All changes tracked in `CHANGELOG.md`
+- "Unreleased" section for work in progress
+- Move to version section on release
+- Categories: Added, Changed, Deprecated, Removed, Fixed, Security
+
+**Git Tags**:
+- Tag releases with `v1.1.0` format
+- Push tags to remote: `git push --tags`
+- View tags: `git tag -l`
+
+---
+
 ## Important Reminders
 
 1. **This Driver is Complete**: All intended features are working
@@ -578,14 +642,18 @@ For future protocol reverse engineering projects:
 
 ---
 
-**Project Status**: ✅ Production Ready
-**Completion**: 100%
-**Last Updated**: 2025-10-16
-**Hardware**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245
+**Project Status**: ✅ Production Ready | 🔬 Active Research
+**v1.1.0 Completion**: 100% (Traditional addressing)
+**Research Phase**: Symbolic addressing, data types, write operations
+**Last Updated**: 2025-10-17
+**Environment**: Windows 10/11 with KEPServerEX and Wireshark
+**Current Hardware**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previous Hardware**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
 **Primary Use Case**: Forensic memory acquisition and PLC monitoring (read-only)
+**Research Approach**: Trial and error with KEPServerEX packet capture (limited protocol documentation)
 
 ---
 
 🎉 **MISSION ACCOMPLISHED!**
 
-For questions or enhancements, consult PROJECT_OVERVIEW.md and PROTOCOL_DISCOVERIES.md.
+For questions or enhancements, consult `docs/overview.md` and `docs/protocol.md`.

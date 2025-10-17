@@ -54,7 +54,7 @@ WARNING:
     damage to equipment or endanger workers.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Jobe Eli Eastwood"
 __email__ = "jobeastwood@hotmail.com"
 __license__ = "MIT"

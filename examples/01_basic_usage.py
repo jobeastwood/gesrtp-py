@@ -26,8 +26,8 @@ from src.driver import GE_SRTP_Driver
 
 def main():
     # PLC connection details
-    PLC_IP = "172.16.12.127"
-    CPU_SLOT = 2  # CPU is in slot 2 for this PLC
+    PLC_IP = "172.16.12.124"
+    CPU_SLOT = 0  # CPU is in slot 0 for EPXCPE210
 
     print("="*60)
     print("GE-SRTP Driver - Basic Usage Example")
@@ -54,8 +54,8 @@ def main():
     print(f"  %R2 (address 1) = {r2}")
 
     # Read multiple registers at once
-    values = plc.read_register(0, count=5)  # Reads %R1 through %R5
-    print(f"  %R1-%R5 (addresses 0-4) = {values}")
+    values = plc.read_register(0, count=10)  # Reads %R1 through %R10
+    print(f"  %R1-%R10 (addresses 0-4) = {values}")
 
     plc.disconnect()
     print("✓ Disconnected")
@@ -68,13 +68,13 @@ def main():
     with GE_SRTP_Driver(PLC_IP, slot=CPU_SLOT) as plc:
         print("✓ Connected to PLC")
 
-        # Read register at address 100 (%R101 on PLC)
-        value = plc.read_register(100)
-        print(f"  %R101 (address 100) = {value}")
+        # Read register at address 0 (%R1 on PLC)
+        value = plc.read_register(0)  # Reads %R1
+        print(f"  %R1 (address 0) = {value}")
 
         # Read batch of registers
-        batch = plc.read_register(100, count=10)
-        print(f"  %R101-%R110 (addresses 100-109) = {batch}")
+        batch = plc.read_register(0, count=10)
+        print(f"  %R1-%R10 (addresses 0-9) = {batch}")
 
     print("✓ Auto-disconnected")
     print()

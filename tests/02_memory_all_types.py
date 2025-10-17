@@ -15,6 +15,12 @@ Tests analog I/O, discrete I/O, internal/temp memory, and system memory.
 """
 
 import logging
+import sys
+import os
+
+# Add parent directory to path so we can import src module
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 from src.driver import GE_SRTP_Driver
 
 # Configure logging
@@ -246,8 +252,8 @@ def test_system_memory(plc):
 
 def main():
     """Run all memory type tests."""
-    plc_ip = "172.16.12.127"
-    cpu_slot = 2
+    plc_ip = "172.16.12.124"
+    cpu_slot = 0  # EPXCPE210 in slot 0
 
     print("="*60)
     print("GE-SRTP MEMORY TYPE TESTING")

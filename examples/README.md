@@ -4,59 +4,73 @@ This directory contains example scripts demonstrating how to use the GE-SRTP PLC
 
 ## Available Examples
 
-### 1. basic_usage.py
-**Simple register reading demonstration**
+Examples are numbered by complexity (01 = simplest, 03 = most advanced).
 
-Shows three methods of using the driver:
+### 01_basic_usage.py
+**Simple register reading demonstration** 🌟 **START HERE**
+
+Perfect introduction to the driver showing three methods:
 - Manual connect/disconnect
 - Context manager (recommended)
 - Reading analog I/O
 
 **Usage:**
 ```bash
-python3 basic_usage.py
+python examples/01_basic_usage.py
 ```
 
-**Key Concepts:**
+**What you'll learn:**
 - 0-based addressing (read %R1 using address 0)
 - Single vs batch reads
 - Context manager auto-disconnect
+- PLC status queries
+
+**Difficulty**: ⭐ Beginner
 
 ---
 
-### 2. continuous_monitor.py
-**Real-time monitoring of PLC memory**
+### 02_realtime_monitor.py
+**Real-time monitoring with in-place updates** 🔥 **NEW & IMPROVED**
 
-Monitors registers or analog I/O for changes and displays them with timestamps.
+Monitor PLC memory with live updates on the same screen (no scrolling!).
+Values update in-place with change indicators (↑ ↓ = CHG).
 
 **Usage:**
 ```bash
-python3 continuous_monitor.py
+python examples/02_realtime_monitor.py
 ```
 
 **Features:**
-- Change detection (only shows when values change)
-- Configurable polling interval
-- Delta calculation
-- Monitor registers or analog I/O
-- Custom address ranges
+- **In-place updates**: Values update on same lines
+- **Change indicators**: ↑ (increased), ↓ (decreased), = (no change), CHG (changed)
+- **3 monitoring modes**: Registers, Analog I/O, Discrete I/O
+- **Configurable**: Choose count and polling interval
+- **Clean display**: Professional real-time monitoring
+
+**Monitor modes:**
+1. **Registers (%R)**: Watch register values change in real-time
+2. **Analog I/O (%AI, %AQ)**: Monitor analog inputs and outputs
+3. **Discrete I/O (%I, %Q)**: Track discrete bit states (ON/OFF)
 
 **Use Cases:**
 - Debugging PLC logic
 - Understanding process behavior
 - Verifying PLC programming changes
-- Real-time data logging
+- Live process monitoring
+- Testing without HMI
+
+**Difficulty**: ⭐⭐ Intermediate
 
 ---
 
-### 3. memory_dump.py
-**Forensic memory acquisition**
+### 03_forensic_dump.py
+**Forensic memory acquisition and export**
 
 Performs comprehensive memory dump to JSON file.
 
 **Usage:**
 ```bash
-python3 memory_dump.py
+python examples/03_forensic_dump.py
 ```
 
 **Captures:**
@@ -74,6 +88,25 @@ JSON file named `plc_dump_<IP>_<timestamp>.json`
 - Incident response
 - Baseline documentation
 - Change tracking
+
+**Difficulty**: ⭐⭐⭐ Advanced
+
+---
+
+## Quick Start Guide
+
+**New users**: Start with `01_basic_usage.py`
+
+```bash
+# 1. Start with basics
+python examples/01_basic_usage.py
+
+# 2. Try real-time monitoring
+python examples/02_realtime_monitor.py
+
+# 3. Perform forensic dump (optional)
+python examples/03_forensic_dump.py
+```
 
 ---
 
@@ -102,8 +135,8 @@ See `../ADDRESSING_SCHEME.md` for detailed explanation.
 # If CPU is in slot 1 (default):
 plc = GE_SRTP_Driver('192.168.1.100', slot=1)
 
-# If CPU is in slot 2 (like the test PLC):
-plc = GE_SRTP_Driver('172.16.12.127', slot=2)
+# If CPU is in slot 0 (like the current test PLC - EPXCPE210):
+plc = GE_SRTP_Driver('172.16.12.124', slot=0)
 ```
 
 Wrong slot number = PLC acknowledges but returns no data!
@@ -122,15 +155,15 @@ See `../SLOT_ADDRESSING_FINDINGS.md` for details.
 - %AI/%AQ (Analog I/O) - Requires analog I/O modules
 - %I/%Q (Discrete I/O) - Requires discrete I/O modules
 
-The test PLC (172.16.12.127) has complete I/O configuration:
-- ✅ Analog Input: IC694ALG223 (16 Ch) in Slot 6
-- ✅ Analog Output: IC694ALG392 (8 Ch) in Slot 7
-- ✅ Discrete Input: IC694MDL240 (16 Ch, 120 VAC) in Slot 8
-- ✅ Discrete Output: IC694MDL916 (16 Ch, 24 VDC) in Slot 9
+The current test PLC (172.16.12.124 - EPXCPE210) configuration:
+- ✅ Slot 0: EPXCPE210 CPU with integrated Ethernet
+- ✅ Slot 1: EP-12F4 I/O module
+- ✅ Slot 2: EP-2714 I/O module
+- ⚠️ No program loaded - clean slate for testing
 
 **Result**: ALL memory types working! ✅
 
-See `../HARDWARE_CONFIG.md` for complete hardware configuration.
+See `../docs/hardware.md` for complete hardware configuration.
 
 ---
 
@@ -140,7 +173,7 @@ See `../HARDWARE_CONFIG.md` for complete hardware configuration.
 
 Edit the script and modify:
 ```python
-PLC_IP = "172.16.12.127"  # Change to your PLC's IP
+PLC_IP = "172.16.12.124"  # Change to your PLC's IP
 CPU_SLOT = 2              # Change to your CPU's slot number
 ```
 
@@ -214,6 +247,7 @@ monitor_registers(plc, start_address=0, count=10, interval=2.0)
 
 **Last Updated**: 2025-10-16
 **Driver Version**: 1.0.0 (Production Ready)
-**Test PLC**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245
+**Current Test PLC**: GE PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
+**Previously Tested**: GE RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
 **Status**: ✅ All example scripts tested and working
 
