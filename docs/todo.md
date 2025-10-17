@@ -1,14 +1,24 @@
 # gesrtp-py - Project Status
 
-**Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
-**Version**: 1.0.0
+**Project Status**: ✅ **PRODUCTION READY** | 🔬 **ACTIVE RESEARCH**
+**Version**: 1.1.0
 **Last Updated**: 2025-10-17
+**Research Phase**: Investigating symbolic addressing, additional data types, and write operations
 
 ---
 
-## 🎉 PROJECT COMPLETE!
+## 🎉 CORE FEATURES COMPLETE!
 
-The GE-SRTP driver is **100% complete** for all intended features. All core functionality has been implemented, tested, and verified on real Emerson RX3i hardware.
+The GE-SRTP driver is **100% complete** for traditional addressing. All core functionality has been implemented, tested, and verified on real Emerson RX3i hardware.
+
+## 🔬 ACTIVE RESEARCH
+
+**New Focus**: Advanced protocol features using trial-and-error approach with limited GE-SRTP documentation.
+
+**Research Tools**:
+- KEPServerEX with GE Ethernet driver (reference implementation)
+- Wireshark for Windows (packet capture and analysis)
+- Real Emerson PACSystems hardware for testing
 
 ---
 
@@ -81,13 +91,104 @@ The GE-SRTP driver is **100% complete** for all intended features. All core func
 
 ## 🔧 CURRENT STATUS
 
-**No tasks in progress** - Project is complete and production-ready!
+**v1.1.0**: Production ready for traditional addressing ✅
+
+**Active Research** (October 2025):
+- 🔬 Symbolic tag addressing investigation via KEPServerEX packet analysis
+- 🔬 Additional data types research (INT, DINT, REAL, STRING, etc.)
+- 🔬 Write operations protocol understanding (⚠️ with extreme safety focus)
+
+---
+
+## 🔬 ACTIVE RESEARCH GOALS
+
+**Environment**: Windows 10/11 with KEPServerEX and Wireshark
+**Approach**: Trial and error / reverse engineering (limited GE-SRTP documentation)
+
+### Research Goal #1: Symbolic Tag Addressing
+
+**Status**: 🔬 Active Investigation
+**Priority**: High (major usability improvement)
+
+- [ ] Capture KEPServerEX traffic reading symbolic tags
+- [ ] Analyze GE-SRTP packets for tag name protocol
+- [ ] Identify service codes for symbolic addressing
+- [ ] Determine if symbol table download is used
+- [ ] Implement `read_tag("TagName")` functionality
+- [ ] Test with various tag types (INT, BOOL, REAL, etc.)
+
+**Documentation**: See `docs/symbolic_addressing.md` for detailed investigation plan
+
+### Research Goal #2: Additional Data Types
+
+**Status**: 🔬 Planned Research
+**Priority**: Medium (enhanced data type support)
+
+**Current Support**: 16-bit words, bits, bytes
+**Target Support**:
+
+| Data Type | Size | Status |
+|-----------|------|--------|
+| BOOL/BIT | 1 bit | ✅ Working |
+| BYTE | 8 bits | ✅ Working |
+| WORD | 16 bits | ⚠️ As register |
+| INT | 16 bits | 🔬 Research |
+| UINT | 16 bits | 🔬 Research |
+| DWORD | 32 bits | 🔬 Research |
+| DINT | 32 bits | 🔬 Research |
+| UDINT | 32 bits | 🔬 Research |
+| REAL | 32 bits | 🔬 Research (IEEE 754 float) |
+| LREAL | 64 bits | 🔬 Research (IEEE 754 double) |
+| STRING | Variable | 🔬 Research |
+| ENUM | Variable | 🔬 Research |
+
+**Investigation Steps**:
+- [ ] Create PLC program with various data types
+- [ ] Capture KEPServerEX reading each data type
+- [ ] Identify service codes and encoding for each type
+- [ ] Implement type-specific read functions
+- [ ] Add proper byte-order handling (little-endian)
+- [ ] Test decoding (especially REAL/LREAL float formats)
+
+**Documentation**: See `docs/wireshark.md` section on data type research
+
+### Research Goal #3: Write Operations
+
+**Status**: 🔬 Research Only (⚠️ NOT FOR IMPLEMENTATION YET)
+**Priority**: Low (safety-critical, requires extensive research)
+
+⚠️ **CRITICAL WARNING**: Write operations are EXTREMELY DANGEROUS
+- Can damage physical equipment ($$$$$ repairs)
+- Can cause worker injury or death
+- Can disrupt critical processes
+- Must implement extensive safety measures
+
+**Investigation Approach**:
+- [ ] Capture KEPServerEX write operations with Wireshark
+- [ ] Identify write service codes (0x07? 0x08? Other?)
+- [ ] Understand payload structure for writes
+- [ ] Document address encoding for writes
+- [ ] Research verification/acknowledgment mechanism
+
+**Safety Requirements BEFORE Implementation**:
+- [ ] Dry-run mode (validate but don't execute)
+- [ ] Explicit confirmation for EVERY write
+- [ ] Comprehensive logging (who, what, when, where)
+- [ ] Rollback capability (if possible)
+- [ ] Rate limiting to prevent rapid writes
+- [ ] Emergency disconnect mechanism
+- [ ] Privilege/permission system
+- [ ] Testing on non-critical PLCs only
+
+**DO NOT IMPLEMENT** until protocol fully understood AND all safety measures designed!
+
+**Documentation**: See `docs/wireshark.md` section on write operations research
 
 ---
 
 ## 🎯 OPTIONAL FUTURE ENHANCEMENTS
 
-These are **optional improvements** - the driver is fully functional without them.
+These are **optional improvements** for later consideration:
 
 ### Testing Infrastructure (Nice to Have)
 - [ ] Create pytest unit test suite

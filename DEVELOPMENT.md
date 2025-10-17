@@ -1,8 +1,9 @@
 # gesrtp-py - Developer Guide
 
-**Project Status**: ✅ **PRODUCTION READY - ALL FEATURES WORKING**
+**Project Status**: ✅ **PRODUCTION READY** | 🔬 **ACTIVE RESEARCH**
 **Version**: 1.1.0
 **Last Updated**: 2025-10-17
+**Research Phase**: Investigating symbolic addressing, additional data types, and write operations
 
 ---
 
@@ -12,8 +13,11 @@ A **complete, production-ready** Python driver for Emerson (formerly GE) Program
 
 ### Current Status
 
-🎉 **PROJECT COMPLETE!** All intended features have been implemented, tested, and verified on real hardware.
+🎉 **PRODUCTION READY** for traditional addressing! All core features implemented and verified on real hardware.
 
+🔬 **ACTIVE RESEARCH** for advanced features using trial-and-error approach with limited protocol documentation.
+
+**Production Features** (v1.1.0):
 - **Code**: 2,500+ lines of production Python
 - **Memory Types**: 9 types with 15 access modes - **ALL WORKING**
 - **Hardware Tested**: Emerson PACSystems EPXCPE210 (Firmware 10.30) and IC695CPE330 (Firmware 10.85)
@@ -21,6 +25,11 @@ A **complete, production-ready** Python driver for Emerson (formerly GE) Program
 - **Test Scripts**: 3 organized tests with comprehensive documentation
 - **Example Scripts**: 3 professional examples with numbered naming + README
 - **Version Control**: Semantic versioning with detailed changelog
+
+**Research Goals** (Future versions):
+- 🔬 **Symbolic tag addressing** - Using KEPServerEX packet analysis to reverse-engineer protocol
+- 🔬 **Additional data types** - INT, DINT, UINT, BYTE, WORD, DWORD, REAL, LREAL, STRING, ENUM
+- 🔬 **Write operations** - Protocol research with extensive safety considerations ⚠️
 
 ---
 
@@ -633,12 +642,15 @@ The project follows **Semantic Versioning** (semver.org):
 
 ---
 
-**Project Status**: ✅ Production Ready
-**Completion**: 100%
+**Project Status**: ✅ Production Ready | 🔬 Active Research
+**v1.1.0 Completion**: 100% (Traditional addressing)
+**Research Phase**: Symbolic addressing, data types, write operations
 **Last Updated**: 2025-10-17
+**Environment**: Windows 10/11 with KEPServerEX and Wireshark
 **Current Hardware**: Emerson PACSystems EPXCPE210 (Firmware 10.30) at 172.16.12.124:18245 (slot 0)
 **Previous Hardware**: Emerson RX3i IC695CPE330 (Firmware 10.85) at 172.16.12.127:18245 (slot 2)
 **Primary Use Case**: Forensic memory acquisition and PLC monitoring (read-only)
+**Research Approach**: Trial and error with KEPServerEX packet capture (limited protocol documentation)
 
 ---
 

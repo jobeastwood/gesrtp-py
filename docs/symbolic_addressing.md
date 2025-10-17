@@ -1,19 +1,33 @@
-# Symbolic Addressing Investigation - Future Enhancement
+# Symbolic Addressing Investigation - Research in Progress
 
-**Date**: 2025-10-16
-**Status**: 🔬 **RESEARCH NEEDED**
-**Priority**: Future Enhancement (Not Critical for Current Functionality)
+**Date**: 2025-10-17 (Updated)
+**Status**: 🔬 **ACTIVE RESEARCH - Windows Environment**
+**Priority**: Active Investigation
+**Environment**: Windows 10/11 with KEPServerEX and Wireshark
+
+---
+
+## Current Research Status (October 2025)
+
+**Development Environment CHANGED**:
+- ✅ **Windows PC**: Primary development environment (was Raspberry Pi)
+- ✅ **KEPServerEX**: Installed with GE Ethernet driver
+- ✅ **Wireshark**: Installed for packet capture
+- ✅ **Test PLC**: Emerson PACSystems EPXCPE210 at 172.16.12.124:18245
+- 🔬 **Active Investigation**: Using KEPServerEX traffic analysis to understand symbolic addressing
+
+**Research Approach**: Trial and error with limited GE-SRTP documentation
 
 ---
 
 ## Executive Summary
 
-Modern PACSystems (GE RX3i) support **symbolic/tag-based addressing** in addition to traditional memory addressing (%R, %Q, %I). This would allow reading variables by name (e.g., "Tank_Level") instead of by address (e.g., %R100).
+Modern PACSystems (Emerson RX3i, formerly GE) support **symbolic/tag-based addressing** in addition to traditional memory addressing (%R, %Q, %I). This would allow reading variables by name (e.g., "Tank_Level") instead of by address (e.g., %R100).
 
 **Current Driver Status**: ✅ Supports traditional addressing (%R, %AI, %AQ, %I, %Q, %M, %T, %S)
 **Symbolic Support**: ❌ Not implemented - protocol unknown
 
-**Key Resource**: Kepware KEPServerEX on separate PC successfully reads symbolic tags from this PLC. We can reverse-engineer the protocol by capturing Kepware's traffic.
+**Key Resource**: KEPServerEX with GE Ethernet driver successfully reads symbolic tags from PLC. We can reverse-engineer the protocol by capturing KEPServerEX traffic with Wireshark.
 
 ---
 
@@ -131,43 +145,51 @@ Since Kepware knows how to do it, we can **watch what it does** and replicate it
 - If Kepware uses EtherNet/IP → We'd need to implement a different protocol
 - Different protocols have completely different packet structures
 
-### Phase 2: Capture Kepware Traffic with Wireshark
+### Phase 2: Capture KEPServerEX Traffic with Wireshark (Windows)
 
-**Setup**: Raspberry Pi 5 is on same network as PLC (172.16.12.127)
+**Setup**: Windows PC with Wireshark and KEPServerEX
 
-**Capture Command**:
-```bash
-# On Raspberry Pi
-sudo tcpdump -i wlan0 -w kepware_symbolic.pcap host 172.16.12.127
+**Method 1 - Wireshark GUI** (Recommended):
+1. Run Wireshark as Administrator
+2. Select network interface connected to PLC
+3. Set capture filter: `host 172.16.12.124 and port 18245`
+4. Start capture
+5. Operate KEPServerEX (read tags)
+6. Stop and save as `kepserver_symbolic.pcapng`
 
-# Let it run while Kepware operates...
-# Press Ctrl+C when done
+**Method 2 - Command Line**:
+```batch
+REM Run as Administrator
+"C:\Program Files\Wireshark\dumpcap.exe" ^
+  -i "Ethernet" ^
+  -f "host 172.16.12.124 and port 18245" ^
+  -w kepserver_symbolic.pcapng
 ```
 
+Or use the included `start_wireshark_capture.bat` script
+
 **What to capture**:
-1. Kepware connecting to PLC (initialization sequence)
-2. Kepware reading 2-3 symbolic tags
-3. Kepware reading 1-2 traditional tags (%R) for comparison
+1. KEPServerEX connecting to PLC (initialization sequence)
+2. KEPServerEX reading 2-3 symbolic tags
+3. KEPServerEX reading 1-2 traditional tags (%R) for comparison
 4. Any periodic traffic (symbol table updates?)
 
 **Duration**: 30-60 seconds should be sufficient
 
+**See `docs/wireshark.md` for detailed Windows capture instructions**
+
 ### Phase 3: Analyze the Packets
 
-**Tools**:
-```bash
-# View packet summary
-tcpdump -r kepware_symbolic.pcap -n
+**Tools** (Windows):
+```batch
+REM Open in Wireshark GUI
+"C:\Program Files\Wireshark\Wireshark.exe" kepserver_symbolic.pcapng
 
-# View packet contents in hex/ASCII
-tcpdump -r kepware_symbolic.pcap -A | less
+REM Or use tshark command line
+"C:\Program Files\Wireshark\tshark.exe" -r kepserver_symbolic.pcapng
 
-# Filter by port
-tcpdump -r kepware_symbolic.pcap 'tcp port 18245'  # GE-SRTP
-tcpdump -r kepware_symbolic.pcap 'tcp port 44818'  # EtherNet/IP
-
-# Use Wireshark (if available)
-wireshark kepware_symbolic.pcap
+REM Filter by port
+"C:\Program Files\Wireshark\tshark.exe" -r kepserver_symbolic.pcapng -Y "tcp.port == 18245"
 ```
 
 **What to look for**:
@@ -469,23 +491,23 @@ This could be exported from PAC Machine Edition or Kepware.
 - No documentation on GE symbolic addressing
 
 ### 🔬 Investigation Resources
-- ✅ Kepware KEPServerEX successfully reading symbolic tags
-- ✅ Wireshark available on Raspberry Pi 5
+- ✅ KEPServerEX with GE Ethernet driver successfully reading symbolic tags
+- ✅ Wireshark installed on Windows PC
 - ✅ Network access to capture traffic
-- ✅ Real PLC hardware for testing (GE RX3i IC695CPE330)
+- ✅ Real PLC hardware for testing (Emerson PACSystems EPXCPE210 at 172.16.12.124)
 
 ### 📋 Recommended Next Steps
 
 **Step 1: Gather Information** (15 minutes)
-- [ ] Check Kepware configuration - what driver/protocol is it using?
+- [ ] Check KEPServerEX configuration - what driver/protocol is it using?
 - [ ] List 2-3 symbolic tag names that exist in the PLC program
 - [ ] Check if tags are purely symbolic or also have %R addresses
 
 **Step 2: Capture Traffic** (30 minutes)
-- [ ] Start tcpdump capture on Raspberry Pi
-- [ ] Kepware: Read 2-3 symbolic tags
-- [ ] Kepware: Read 1-2 traditional tags (%R) for comparison
-- [ ] Stop capture and save pcap file
+- [ ] Start Wireshark capture on Windows PC
+- [ ] KEPServerEX: Read 2-3 symbolic tags using OPC Quick Client
+- [ ] KEPServerEX: Read 1-2 traditional tags (%R) for comparison
+- [ ] Stop capture and save pcapng file
 
 **Step 3: Analyze Packets** (1-2 hours)
 - [ ] Identify protocol and port number
@@ -530,33 +552,39 @@ This provides 80% of the benefits with 20% of the effort, and can be upgraded la
 - `SLOT_ADDRESSING_FINDINGS.md` - Mailbox addressing
 
 ### External Resources
-- Kepware KEPServerEX (separate PC) - Working symbolic read implementation
-- GE PAC Machine Edition v10.6 - PLC programming environment
-- Wireshark/tcpdump - Packet capture tools
+- KEPServerEX with GE Ethernet driver - Working symbolic read implementation
+- PAC Machine Edition (optional) - PLC programming environment
+- Wireshark for Windows - Packet capture and analysis tool
 
 ### PLC Hardware
-- GE RX3i IC695CPE330 (Firmware 10.85)
-- IP: 172.16.12.127, Port: 18245
-- CPU Slot: 2
+- **Current**: Emerson PACSystems EPXCPE210 (Firmware 10.30)
+  - IP: 172.16.12.124, Port: 18245
+  - CPU Slot: 0
+- **Previous**: Emerson RX3i IC695CPE330 (Firmware 10.85)
+  - IP: 172.16.12.127, Port: 18245
+  - CPU Slot: 2
 
 ---
 
 ## Notes
 
-- This is a **future enhancement**, not a critical feature
+- This is **active research**, part of protocol reverse engineering effort
 - Current driver is **production-ready** for traditional addressing
-- Symbolic support would improve usability but isn't required for basic functionality
-- Most industrial protocols (Modbus, EtherNet/IP) started with direct addressing and added symbolic support later
-- Our driver follows the same evolution path
+- Symbolic support would improve usability significantly
+- **Trial and error approach** due to limited GE-SRTP documentation
+- Using KEPServerEX as reference implementation
 
 ---
 
-**Status**: 📝 Documentation Complete - Ready for Investigation
-**Priority**: Enhancement (Nice to Have)
-**Effort**: Medium (2-6 hours with Kepware packet capture)
+**Status**: 🔬 **ACTIVE RESEARCH**
+**Priority**: Active Investigation
+**Effort**: Medium-High (trial and error with KEPServerEX packet analysis)
 **Value**: High (Much better user experience)
+**Approach**: Reverse engineering via packet capture
 
 ---
 
-**Last Updated**: 2025-10-16
-**Next Action**: Capture Kepware traffic to identify symbolic read protocol
+**Last Updated**: 2025-10-17
+**Environment**: Windows 10/11 with KEPServerEX and Wireshark
+**Next Action**: Capture KEPServerEX traffic to identify symbolic read protocol
+**See Also**: `docs/wireshark.md` for detailed capture procedures
