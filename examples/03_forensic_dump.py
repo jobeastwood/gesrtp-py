@@ -16,16 +16,12 @@ Performs a comprehensive memory dump of a GE Fanuc PLC, saving the results to JS
 Useful for forensic analysis, backup, and troubleshooting.
 """
 
-import sys
-import os
 import json
+import os
 from datetime import datetime
 from typing import Dict, Any
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 
 def dump_registers(plc: GE_SRTP_Driver, start: int, end: int) -> Dict[str, Any]:

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gesrtp"
+version = "1.1.0"
+description = "Pure Python implementation of GE-SRTP protocol for Emerson PACSystems PLCs"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Jobe Eli Eastwood", email = "jobeastwood@hotmail.com"}
+]
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Hardware",
+    "Topic :: System :: Networking",
+]
+keywords = ["PLC", "GE", "SRTP", "PACSystems", "Emerson", "RX3i", "industrial", "automation", "SCADA"]
+
+[project.urls]
+Homepage = "https://github.com/jobeastwood/gesrtp-py"
+Repository = "https://github.com/jobeastwood/gesrtp-py"
+Issues = "https://github.com/jobeastwood/gesrtp-py/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["gesrtp*"]

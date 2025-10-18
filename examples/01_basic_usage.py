@@ -15,13 +15,7 @@ Basic GE-SRTP Driver Usage Example
 Demonstrates simple register reading from a GE Fanuc PLC.
 """
 
-import sys
-import os
-
-# Add parent directory to path to import src module
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 
 def main():

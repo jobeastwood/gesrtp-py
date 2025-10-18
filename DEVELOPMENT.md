@@ -35,6 +35,26 @@ A **complete, production-ready** Python driver for Emerson (formerly GE) Program
 
 ## Quick Start for Developers
 
+### Installation (New in v1.1.0!)
+
+The package is now installable via pip:
+
+```bash
+# Clone repository
+git clone https://github.com/jobeastwood/gesrtp-py.git
+cd gesrtp-py
+
+# Install in editable mode (recommended for development)
+pip install -e .
+```
+
+Now you can use clean imports anywhere:
+```python
+from gesrtp import GE_SRTP_Driver
+```
+
+No more `sys.path.insert()` hacks needed!
+
 ### For New Contributors
 
 1. **Read docs/overview.md** - Complete project summary and achievements
@@ -316,7 +336,7 @@ Bytes 48-55: Reserved (0x00)
 ### Basic Read (0-Based Addressing!)
 
 ```python
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # IMPORTANT: Specify correct CPU slot! (slot 0 for current test PLC)
 # IMPORTANT: Use 0-based addressing! (Protocol Address = PLC Register Number - 1)

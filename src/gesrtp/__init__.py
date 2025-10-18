@@ -34,10 +34,10 @@ Supported PLC Models:
 
 Example:
     ```python
-    from src.driver import GE_SRTP_Driver
+    from gesrtp import GE_SRTP_Driver
 
     # Connect to PLC
-    plc = GE_SRTP_Driver('172.16.12.127', slot=2)
+    plc = GE_SRTP_Driver('172.16.12.124', slot=0)
     plc.connect()
 
     # Read register (0-based addressing: %R1 = address 0)

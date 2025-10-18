@@ -306,7 +306,7 @@ cd /home/jobeastwood/Desktop/plc_project
 
 ### Basic Usage
 ```python
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # IMPORTANT: Specify correct CPU slot!
 # IMPORTANT: Use 0-based addressing (Protocol Address = PLC Register Number - 1)

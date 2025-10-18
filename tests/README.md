@@ -238,7 +238,7 @@ Test description here.
 """
 
 import logging
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

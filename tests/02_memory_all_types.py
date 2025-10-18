@@ -15,13 +15,8 @@ Tests analog I/O, discrete I/O, internal/temp memory, and system memory.
 """
 
 import logging
-import sys
-import os
 
-# Add parent directory to path so we can import src module
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # Configure logging
 logging.basicConfig(

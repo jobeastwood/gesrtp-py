@@ -147,7 +147,7 @@ See `docs/protocol.md` section 5 for complete details.
 For this specific PLC, use:
 
 ```python
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # CRITICAL: slot=0 parameter is MANDATORY for this hardware!
 plc = GE_SRTP_Driver('172.16.12.124', slot=0)

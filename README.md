@@ -90,13 +90,31 @@ See `examples/README.md` for detailed documentation.
 
 ## Installation
 
+### Option 1: Install as Package (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/jobeastwood/gesrtp-py.git
+cd gesrtp-py
+
+# Install in editable mode (allows you to modify code)
+pip install -e .
+
+# Or install normally
+pip install .
+```
+
+Now you can use `from gesrtp import GE_SRTP_Driver` from anywhere!
+
+### Option 2: Development Setup
+
 ```bash
 # Create virtual environment
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Install in editable mode with development tools
+pip install -e .
 ```
 
 ## Usage
@@ -115,7 +133,7 @@ See `docs/protocol.md` section 4 for detailed explanation of the addressing sche
 ### Basic Example
 
 ```python
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # Connect to PLC (specify slot if CPU is not in slot 1)
 # Current test PLC: slot=0 at 172.16.12.124
@@ -243,7 +261,7 @@ python3 examples/01_basic_usage.py
 ### Your First Read
 
 ```python
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 # Connect to PLC (specify slot if CPU not in slot 1)
 with GE_SRTP_Driver('172.16.12.124', slot=0) as plc:

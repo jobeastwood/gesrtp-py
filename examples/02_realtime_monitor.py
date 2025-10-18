@@ -17,15 +17,12 @@ Values are displayed and updated on the same lines (no scrolling).
 Changes are highlighted when detected.
 """
 
+import os
 import sys
 import time
-import os
 from datetime import datetime
 
-# Add parent directory to path so we can import src module
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
-from src.driver import GE_SRTP_Driver
+from gesrtp import GE_SRTP_Driver
 
 
 def clear_screen():

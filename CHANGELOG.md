@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+**NOTE**: When releasing, this should be version **1.2.0** (MINOR bump) - new packaging feature with minor breaking change (import path).
+
 ### Added
+- **Proper Python package structure** with `pyproject.toml`
+- Package is now installable via `pip install -e .`
+- Modern package layout: `src/gesrtp/` with all modules
+- Clean imports: `from gesrtp import GE_SRTP_Driver` (no more sys.path hacks!)
 - New test environment configuration for Emerson PACSystems EPXCPE210
 - Comprehensive test script `03_memory_comprehensive_0_64.py` for testing addresses 0-64
 - Complete test suite documentation in `tests/README.md`
@@ -16,14 +22,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Difficulty ratings for examples (⭐ to ⭐⭐⭐)
 - `docs/` directory for organized documentation
 - Versioning infrastructure (CHANGELOG.md, VERSION file)
+- Installation instructions in README.md
 
 ### Changed
+- **BREAKING**: Package renamed from `src` to `gesrtp` - update imports!
+  - Old: `from src.driver import GE_SRTP_Driver`
+  - New: `from gesrtp import GE_SRTP_Driver`
 - **BREAKING**: Updated test environment to EPXCPE210 (slot 0, IP 172.16.12.124)
+- Restructured source: `src/` → `src/gesrtp/` for proper package layout
 - Completely rewrote `02_realtime_monitor.py` with in-place updates (no scrolling!)
 - Improved `examples/README.md` with better structure and quick start guide
 - Renamed test files with numbered prefix for better organization
 - Renamed example files with numbered prefix for better organization
-- Updated all documentation for new hardware configuration
+- Updated all documentation for new hardware configuration and new import style
+- Updated all examples and tests to use clean `from gesrtp` imports
 - Reorganized documentation: moved 6 markdown files to `docs/` directory
   - `PROJECT_OVERVIEW.md` → `docs/overview.md`
   - `PROTOCOL_DISCOVERIES.md` → `docs/protocol.md`
@@ -33,11 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `TODO.md` → `docs/todo.md`
 
 ### Removed
+- **sys.path.insert() hacks** from all examples and test files
 - 5 obsolete discrete I/O debugging test files
 - Old test file naming convention
 
 ### Fixed
-- Import path issues in all test and example files
+- Import path issues in all test and example files (now using proper package imports)
 - Cursor positioning in real-time monitor for options 2 and 3
 - Section header display in analog I/O and discrete I/O monitors
 
